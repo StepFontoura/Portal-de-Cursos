@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Qualificação | Cursos Disponíveis</title>
+    <!-- Importação do Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuração de cores institucionais (Padrão SENAI) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        senaiRed: '#E3000F',
+                        senaiBlue: '#002B5C'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen relative">
+
+    <!-- Cabeçalho / Header -->
+    <header class="bg-senaiBlue text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold tracking-tight">Portal de Qualificação</h1>
+                <p class="text-sm text-gray-300 mt-1">Ribas do Rio Pardo - MS</p>
+            </div>
+            <!-- Logo SENAI Simplificada -->
+            <div class="font-black text-3xl text-senaiRed bg-white px-3 py-1 rounded">SENAI</div>
+        </div>
+    </header>
+
+    <!-- Área Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <!-- Título da Seção e Filtros -->
+        <div class="flex justify-between items-end mb-8 border-b border-gray-300 pb-4">
+            <h2 class="text-3xl font-extrabold text-gray-900">Inscrições Abertas</h2>
+            <div class="flex gap-2">
+                <button class="px-4 py-2 bg-senaiBlue text-white text-sm font-semibold rounded-md shadow">Atuais</button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 text-sm font-semibold rounded-md hover:bg-gray-300 transition">Próximos</button>
+            </div>
+        </div>
+
+        <!-- Grid de Cursos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="course-grid">
+            
+            <!-- CARD DE CURSO (Exemplo) -->
+            <div class="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col">
+                
+                <!-- Tag Superior -->
+                <div class="bg-senaiRed text-white text-xs font-bold px-4 py-1 uppercase tracking-wider">
+                    Início: 09/11/2026
+                </div>
+                
+                <!-- Corpo do Card -->
+                <div class="p-6 flex-1 flex flex-col">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Fundamentos de Mecânica</h3>
+                    
+                    <div class="space-y-2 mb-6">
+                        <p class="text-sm text-gray-600 flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-senaiBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Carga Horária: 20h
+                        </p>
+                        <p class="text-sm text-gray-600 flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-senaiBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            Segunda a Sexta | 18h às 22h
+                        </p>
+                    </div>
+                    
+                    <!-- Termômetro de Vagas -->
+                    <div class="mt-auto bg-gray-50 p-4 rounded-lg border border-gray-100">
+                        <div class="flex justify-between text-sm font-medium mb-1">
+                            <span class="text-gray-700">Vagas Preenchidas</span>
+                            <span class="text-senaiBlue">12 / 20</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-green-500 h-2.5 rounded-full" style="width: 60%"></div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2 text-right">8 vagas restantes</p>
+                    </div>
+                </div>
+                
+                <!-- Botão de Ação -->
+                <div class="p-4 bg-gray-50 border-t border-gray-100">
+                    <button class="btn-open-modal w-full bg-senaiBlue hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-md transition duration-200 text-sm">
+                        Garantir Vaga
+                    </button>
+                </div>
+            </div>
+            <!-- FIM DO CARD -->
+            
+        </div>
+    </main>
+
+    <!-- Modal de Inscrição -->
+    <div id="registration-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex flex-col items-center justify-center p-4">
+        
+        <!-- Contêiner do Modal -->
+        <div class="bg-white w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            
+            <!-- Cabeçalho do Modal -->
+            <div class="bg-senaiBlue px-6 py-4 flex justify-between items-center">
+                <h3 class="text-xl font-bold text-white">Ficha de Inscrição</h3>
+                <button id="close-modal-icon" class="text-gray-300 hover:text-white transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Corpo do Formulário -->
+            <div class="p-6 overflow-y-auto flex-1">
+                
+                <!-- Resumo do Curso Selecionado -->
+                <div class="bg-blue-50 border-l-4 border-senaiBlue p-4 mb-6 rounded-r-md">
+                    <p class="text-sm text-blue-900 font-semibold uppercase tracking-wider">Curso Selecionado</p>
+                    <p id="modal-course-title" class="text-lg font-bold text-gray-900">Fundamentos de Mecânica</p>
+                    <p id="modal-course-date" class="text-sm text-gray-700">Início: 09/11/2026 | 18h às 22h</p>
+                </div>
+
+                <form id="registration-form" class="space-y-5">
+                    
+                    <!-- Dados Pessoais -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="md:col-span-2">
+                            <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo *</label>
+                            <input type="text" id="nome" name="nome" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-senaiBlue focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="cpf" class="block text-sm font-medium text-gray-700 mb-1">CPF *</label>
+                            <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-senaiBlue focus:border-transparent">
+                        </div>
+
+                        <div>
+                            <label for="whatsapp" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp / Celular *</label>
+                            <input type="tel" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-senaiBlue focus:border-transparent">
+                        </div>
+                    </div>
+
+                    <hr class="border-gray-200">
+
+                    <!-- Envio de Documentos (Arquivos) -->
+                    <div>
+                        <h4 class="text-base font-semibold text-gray-900 mb-3">Documentação Obrigatória</h4>
+                        <p class="text-xs text-gray-500 mb-4">Anexe os arquivos em formato PDF, JPG ou PNG.</p>
+                        
+                        <div class="space-y-4">
+                            <!-- Upload CNH ou Identidade -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">CNH ou Identidade (Frente e Verso) *</label>
+                                <input type="file" id="doc_identidade" accept=".pdf, image/jpeg, image/png" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-senaiBlue hover:file:bg-blue-100 cursor-pointer">
+                            </div>
+
+                            <!-- Upload Comprovante de Residência -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Comprovante de Residência *</label>
+                                <input type="file" id="doc_residencia" accept=".pdf, image/jpeg, image/png" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-senaiBlue hover:file:bg-blue-100 cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- Rodapé do Modal / Botões de Ação -->
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-end gap-3">
+                <button type="button" id="cancel-btn" class="px-5 py-2 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-100 transition">
+                    Cancelar
+                </button>
+                <button type="submit" form="registration-form" class="px-5 py-2 bg-senaiRed text-white font-bold rounded-md hover:bg-red-700 transition flex items-center">
+                    Enviar Inscrição
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Script Simples para testar a abertura e fechamento do Modal -->
+    <script>
+        const modal = document.getElementById('registration-modal');
+        const openButtons = document.querySelectorAll('.btn-open-modal');
+        const closeIcon = document.getElementById('close-modal-icon');
+        const cancelBtn = document.getElementById('cancel-btn');
+
+        function toggleModal() {
+            modal.classList.toggle('hidden');
+        }
+
+        openButtons.forEach(btn => btn.addEventListener('click', toggleModal));
+        closeIcon.addEventListener('click', toggleModal);
+        cancelBtn.addEventListener('click', toggleModal);
+
+        // Fecha o modal ao clicar fora dele
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) toggleModal();
+        });
+    </script>
+</body>
+</html>
