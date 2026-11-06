@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Qualificação | Cursos Disponíveis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        senaiRed: '#E3000F',
+                        senaiBlue: '#002B5C'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen relative">
+
+    <!-- Cabeçalho -->
+    <header class="bg-senaiBlue text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold tracking-tight">Portal de Qualificação</h1>
+                <p class="text-sm text-gray-300 mt-1">Ribas do Rio Pardo - MS</p>
+            </div>
+            <div class="font-black text-3xl text-senaiRed bg-white px-3 py-1 rounded">SENAI</div>
+        </div>
+    </header>
+
+    <!-- Área Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div class="flex justify-between items-end mb-8 border-b border-gray-300 pb-4">
+            <h2 class="text-3xl font-extrabold text-gray-900">Inscrições Abertas</h2>
+        </div>
+
+        <!-- Grid de Cursos (Será preenchido dinamicamente) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="course-grid">
+            <p class="text-gray-500 col-span-full text-center py-10" id="loading-msg">Carregando cursos disponíveis...</p>
+        </div>
+    </main>
+
+    <!-- Modal de Inscrição -->
+    <div id="registration-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex flex-col items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            
+            <div class="bg-senaiBlue px-6 py-4 flex justify-between items-center">
+                <h3 class="text-xl font-bold text-white">Ficha de Inscrição</h3>
+                <button id="close-modal-icon" class="text-gray-300 hover:text-white transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto flex-1">
+                <div class="bg-blue-50 border-l-4 border-senaiBlue p-4 mb-6 rounded-r-md">
+                    <p class="text-sm text-blue-900 font-semibold uppercase tracking-wider">Curso Selecionado</p>
+                    <p id="modal-course-title" class="text-lg font-bold text-gray-900">-</p>
+                    <p id="modal-course-date" class="text-sm text-gray-700">-</p>
+                </div>
+
+                <form id="registration-form" class="space-y-5">
+                    <input type="hidden" id="curso_selecionado" name="curso_selecionado">
+                    
+                    <!-- Dados Pessoais -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="md:col-span-2">
+                            <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo *</label>
+                            <input type="text" id="nome" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-senaiBlue">
+                        </div>
+                        <div>
+                            <label for="cpf" class="block text-sm font-medium text-gray-700 mb-1">CPF *</label>
+                            <input type="text" id="cpf" placeholder="000.000.000-00" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-senaiBlue">
+                        </div>
+                        <div>
+                            <label for="whatsapp" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp / Celular *</label>
+                            <input type="tel" id="whatsapp" placeholder="(00) 00000-0000" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-senaiBlue">
+                        </div>
+                    </div>
+
+                    <hr class="border-gray-200">
+
+                    <!-- Envio de Documentos -->
+                    <div>
+                        <h4 class="text-base font-semibold text-gray-900 mb-3">Documentação Obrigatória</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">CNH ou Identidade *</label>
+                                <input type="file" id="doc_identidade" accept=".pdf, image/jpeg, image/png" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-50 file:text-senaiBlue hover:file:bg-blue-100 cursor-pointer">
+                            </div>
+                            <!-- Novo campo de CPF -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Documento de CPF (Caso não conste na Identidade)</label>
+                                <input type="file" id="doc_cpf" accept=".pdf, image/jpeg, image/png" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-50 file:text-senaiBlue hover:file:bg-blue-100 cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Comprovante de Residência *</label>
+                                <input type="file" id="doc_residencia" accept=".pdf, image/jpeg, image/png" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-50 file:text-senaiBlue hover:file:bg-blue-100 cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Rodapé e Botões -->
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-end gap-3 items-center">
+                <span id="form-feedback" class="text-sm text-senaiBlue font-semibold hidden">Enviando... Aguarde.</span>
+                <button type="button" id="cancel-btn" class="px-5 py-2 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-100 transition">Cancelar</button>
+                <button type="submit" form="registration-form" id="submit-btn" class="px-5 py-2 bg-senaiRed text-white font-bold rounded-md hover:bg-red-700 transition flex items-center">
+                    Enviar Inscrição
+                </button>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- JavaScript de Integração -->
+    <script>
+        // URL gerada pelo Google Apps Script
+        const API_URL = 'https://script.google.com/macros/s/AKfycbziLTDD2J4hikd0m7jnxIXV9_od8pTIkRw3Fhwf9DNcdRq2eAPwOobdp5S_3CYVoMQ6pA/exec';
+
+        // Elementos DOM
+        const grid = document.getElementById('course-grid');
+        const loadingMsg = document.getElementById('loading-msg');
+        const modal = document.getElementById('registration-modal');
+        const form = document.getElementById('registration-form');
+        
+        // Inicialização: Buscar cursos ativos da planilha
+        async function carregarCursos() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                
+                if (data.status === 'sucesso' && data.cursos.length > 0) {
+                    grid.innerHTML = ''; // Limpa mensagem de carregamento
+                    data.cursos.forEach(curso => renderizarCard(curso));
+                } else {
+                    grid.innerHTML = '<p class="text-gray-500 col-span-full text-center py-10">Nenhum curso disponível no momento.</p>';
+                }
+            } catch (error) {
+                grid.innerHTML = '<p class="text-red-500 col-span-full text-center py-10">Erro ao carregar cursos. Tente novamente mais tarde.</p>';
+            }
+        }
+
+        // Criar o HTML do card do curso
+        function renderizarCard(curso) {
+            const vagasTotais = parseInt(curso['Vagas Totais']) || 0;
+            const vagasPreenchidas = parseInt(curso['Vagas Preenchidas']) || 0;
+            const vagasRestantes = vagasTotais - vagasPreenchidas;
+            const percentual = vagasTotais > 0 ? (vagasPreenchidas / vagasTotais) * 100 : 0;
+            
+            // Formatando datas que vem do Sheets
+            const inicio = new Date(curso['Inicio']).toLocaleDateString('pt-BR', {timeZone: 'UTC'});
+            const termino = new Date(curso['Termino']).toLocaleDateString('pt-BR', {timeZone: 'UTC'});
+
+            const cardHTML = `
+                <div class="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col">
+                    <div class="bg-senaiRed text-white text-xs font-bold px-4 py-1 uppercase tracking-wider">
+                        Início: ${inicio}
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">${curso['Curso']}</h3>
+                        <div class="space-y-2 mb-6">
+                            <p class="text-sm text-gray-600 flex items-center">
+                                Carga Horária: ${curso['Carga Horaria']}
+                            </p>
+                            <p class="text-sm text-gray-600 flex items-center">
+                                ${curso['Turno']} | ${inicio} a ${termino}
+                            </p>
+                        </div>
+                        <div class="mt-auto bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <div class="flex justify-between text-sm font-medium mb-1">
+                                <span class="text-gray-700">Vagas Preenchidas</span>
+                                <span class="text-senaiBlue">${vagasPreenchidas} / ${vagasTotais}</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full" style="width: ${percentual}%"></div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2 text-right">${vagasRestantes} vagas restantes</p>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-gray-50 border-t border-gray-100">
+                        <button onclick="abrirModal('${curso['Curso']}', '${inicio}', '${curso['Turno']}')" class="w-full bg-senaiBlue hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-md transition text-sm" ${vagasRestantes <= 0 ? 'disabled' : ''}>
+                            ${vagasRestantes <= 0 ? 'Turma Lotada' : 'Garantir Vaga'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            grid.insertAdjacentHTML('beforeend', cardHTML);
+        }
+
+        // Funções do Modal
+        function abrirModal(nomeCurso, inicio, turno) {
+            document.getElementById('curso_selecionado').value = nomeCurso;
+            document.getElementById('modal-course-title').innerText = nomeCurso;
+            document.getElementById('modal-course-date').innerText = `Início: ${inicio} | ${turno}`;
+            modal.classList.remove('hidden');
+        }
+
+        function fecharModal() {
+            modal.classList.add('hidden');
+            form.reset();
+        }
+
+        document.getElementById('close-modal-icon').addEventListener('click', fecharModal);
+        document.getElementById('cancel-btn').addEventListener('click', fecharModal);
+        modal.addEventListener('click', (e) => { if(e.target === modal) fecharModal(); });
+
+        // Conversor de Arquivo para Base64
+        const toBase64 = file => new Promise((resolve, reject) => {
+            if (!file) { resolve(null); return; }
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+        // Envio do Formulário para a API
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const feedback = document.getElementById('form-feedback');
+            
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50');
+            feedback.classList.remove('hidden');
+            feedback.innerText = 'Enviando documentos... Aguarde.';
+
+            try {
+                // Captura os arquivos
+                const fileDoc = document.getElementById('doc_identidade').files[0];
+                const fileCpf = document.getElementById('doc_cpf').files[0];
+                const fileRes = document.getElementById('doc_residencia').files[0];
+
+                // Converte para Base64
+                const base64Doc = await toBase64(fileDoc);
+                const base64Cpf = await toBase64(fileCpf);
+                const base64Res = await toBase64(fileRes);
+
+                // Monta o pacote de dados JSON (Payload)
+                const payload = {
+                    curso: document.getElementById('curso_selecionado').value,
+                    nome: document.getElementById('nome').value,
+                    cpf: document.getElementById('cpf').value,
+                    whatsapp: document.getElementById('whatsapp').value,
+                    
+                    arquivoDoc: base64Doc,
+                    tipoDoc: fileDoc ? fileDoc.type : '',
+                    
+                    arquivoCpf: base64Cpf,
+                    tipoCpf: fileCpf ? fileCpf.type : '',
+                    
+                    arquivoRes: base64Res,
+                    tipoRes: fileRes ? fileRes.type : ''
+                };
+
+                // Dispara POST para o Google Apps Script
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+                
+                const resultado = await res.json();
+                
+                if (resultado.status === 'sucesso') {
+                    alert('Inscrição realizada com sucesso! Seus documentos foram enviados.');
+                    fecharModal();
+                    // Opcional: Atualizar a página para refletir as vagas atualizadas
+                    // window.location.reload(); 
+                } else {
+                    alert('Houve um erro no servidor: ' + resultado.mensagem);
+                }
+
+            } catch (error) {
+                alert('Erro na comunicação. Verifique sua conexão e tente novamente.');
+                console.error(error);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50');
+                feedback.classList.add('hidden');
+            }
+        });
+
+        // Executar carregamento ao abrir a página
+        carregarCursos();
+    </script>
+</body>
+</html>
