@@ -1,289 +1,801 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Qualificação | Cursos Disponíveis</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        senaiRed: '#E3000F',
-                        senaiBlue: '#002B5C'
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portal de Cursos | SENAI - Ribas do Rio Pardo</title>
+<meta name="description" content="Cursos gratuitos de qualificação profissional do SENAI em Ribas do Rio Pardo - MS. Inscrições abertas para maiores de 16 anos. Inscreva-se online.">
+<meta name="theme-color" content="#002B5C">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="SENAI - Ribas do Rio Pardo">
+<meta property="og:title" content="Portal de Cursos | SENAI - Ribas do Rio Pardo">
+<meta property="og:description" content="Cursos gratuitos de qualificação profissional. Inscrições abertas — a partir de 16 anos.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23002B5C'/%3E%3Crect x='0' y='0' width='64' height='12' rx='6' fill='%23E3000F'/%3E%3Ctext x='32' y='46' font-family='Arial,Helvetica,sans-serif' font-size='30' font-weight='bold' fill='%23ffffff' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { senaiRed: '#E3000F', senaiBlue: '#002B5C', senaiBlueDark: '#001F42' },
+    keyframes: { fadeUp: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } },
+    animation: { 'fade-up': 'fadeUp .45s cubic-bezier(.22,.61,.36,1) both' }
+  } }
+}
+</script>
+<style>
+html{-webkit-text-size-adjust:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+.noscroll{scrollbar-width:none}
+.noscroll::-webkit-scrollbar{display:none}
+.arquivo{width:100%;font-size:.875rem;color:#475569;background:#f8fafc;border:1.5px dashed #cbd5e1;border-radius:.75rem;padding:.5rem;cursor:pointer;transition:border-color .2s,background .2s}
+.arquivo:hover{border-color:#94a3b8;background:#f1f5f9}
+.arquivo::file-selector-button{margin-right:.75rem;padding:.5rem .9rem;border:0;border-radius:.5rem;background:#e8eef7;color:#002B5C;font-weight:700;font-size:.8125rem;cursor:pointer}
+.arquivo::file-selector-button:hover{background:#dbe6f5}
+.erro{display:none;margin-top:.375rem;font-size:.75rem;font-weight:600;color:#dc2626}
+.erro.ativo{display:block}
+.campo-invalido{border-color:#ef4444!important;box-shadow:0 0 0 3px rgba(239,68,68,.12)!important}
+.campo{width:100%;border:1px solid #cbd5e1;border-radius:.6rem;padding:.65rem .8rem;font-size:.9375rem;background:#fff;transition:border-color .15s,box-shadow .15s}
+.campo:focus{outline:none;border-color:#002B5C;box-shadow:0 0 0 3px rgba(0,43,92,.12)}
+.campo::placeholder{color:#94a3b8}
+</style>
 </head>
-<body class="bg-gray-100 min-h-screen relative">
 
-    <!-- Cabeçalho -->
-    <header class="bg-senaiBlue text-white shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
-            <div>
-                <h1 class="text-2xl font-bold tracking-tight">Portal de Qualificação</h1>
-                <p class="text-sm text-gray-300 mt-1">Ribas do Rio Pardo - MS</p>
-            </div>
-            <div class="font-black text-3xl text-senaiRed bg-white px-3 py-1 rounded">SENAI</div>
+<body class="flex min-h-screen flex-col bg-slate-100 text-slate-800 antialiased">
+<a href="#cursos" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-senaiBlue focus:shadow-lg">Ir para a lista de cursos</a>
+
+<div class="h-1 bg-senaiRed"></div>
+<header class="sticky top-0 z-40 bg-senaiBlue shadow-lg">
+  <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between gap-3 py-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <div class="shrink-0 rounded-lg bg-white px-2.5 py-1.5 shadow-sm">
+          <span class="block text-lg font-black leading-none tracking-tight text-senaiRed">SENAI</span>
         </div>
-    </header>
-
-    <!-- Área Principal -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div class="flex justify-between items-end mb-8 border-b border-gray-300 pb-4">
-            <h2 class="text-3xl font-extrabold text-gray-900">Inscrições Abertas</h2>
+        <div class="min-w-0">
+          <p class="truncate text-base font-bold leading-tight text-white sm:text-lg">Portal de Cursos</p>
+          <p class="truncate text-[11px] leading-tight text-blue-100/90 sm:text-xs">SENAI - Ribas do Rio Pardo · MS</p>
         </div>
+      </div>
+      <a href="#cursos" class="hidden shrink-0 items-center gap-2 rounded-lg bg-white/10 px-3.5 py-2 text-sm font-semibold text-white ring-1 ring-inset ring-white/20 transition hover:bg-white/20 sm:inline-flex">Ver cursos</a>
+    </div>
+  </div>
+</header>
 
-        <!-- Grid de Cursos (Será preenchido dinamicamente) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="course-grid">
-            <p class="text-gray-500 col-span-full text-center py-10" id="loading-msg">Carregando cursos disponíveis...</p>
+<section class="relative overflow-hidden bg-gradient-to-br from-senaiBlue via-[#00356b] to-[#004f96] text-white">
+  <div class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-white/5"></div>
+  <div class="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-senaiRed/10"></div>
+  <div class="relative mx-auto w-full max-w-7xl px-4 pb-8 pt-8 sm:px-6 sm:pb-12 sm:pt-12 lg:px-8">
+    <span class="inline-flex items-center gap-2 rounded-full bg-senaiRed px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white">Qualificação profissional</span>
+    <h1 class="mt-4 max-w-3xl text-3xl font-extrabold leading-[1.15] tracking-tight sm:text-4xl lg:text-5xl">Cursos gratuitos para você começar na indústria</h1>
+    <p class="mt-3 max-w-2xl text-sm leading-relaxed text-blue-100 sm:text-base">Inscrições abertas nas turmas do SENAI em Ribas do Rio Pardo. Escolha seu curso, envie os documentos e garanta sua vaga.</p>
+
+    <ul class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold text-white/95">
+      <li class="inline-flex items-center gap-2">
+        <svg class="h-4 w-4 text-emerald-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
+        Todos os cursos são gratuitos
+      </li>
+      <li class="inline-flex items-center gap-2">
+        <svg class="h-4 w-4 text-blue-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.25a7.5 7.5 0 0 1 15 0"/></svg>
+        A partir de <span id="idade-minima">16</span> anos de idade
+      </li>
+      <li class="inline-flex items-center gap-2">
+        <svg class="h-4 w-4 text-blue-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.4 60.4 0 0 0-.491 6.347A48.6 48.6 0 0 1 12 20.9a48.6 48.6 0 0 1 8.232-4.406 60.4 60.4 0 0 0-.491-6.347M12 3.5 2.25 8.25 12 13l9.75-4.75L12 3.5Zm0 9.5v7.5"/></svg>
+        Certificado SENAI
+      </li>
+    </ul>
+
+    <div class="mt-7 rounded-2xl bg-white p-3.5 shadow-2xl ring-1 ring-black/5 sm:p-4">
+      <div class="flex flex-col gap-2.5 sm:flex-row sm:items-center">
+        <div class="relative flex-1">
+          <svg class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" style="width:1.1rem;height:1.1rem" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35M17 10.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z"/></svg>
+          <label for="busca" class="sr-only">Buscar curso</label>
+          <input id="busca" type="search" autocomplete="off" placeholder="Buscar curso (ex.: Excel, mecânica…)" class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-senaiBlue focus:bg-white focus:outline-none focus:ring-2 focus:ring-senaiBlue/15">
         </div>
-    </main>
-
-    <!-- Modal de Inscrição -->
-    <div id="registration-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex flex-col items-center justify-center p-4">
-        <div class="bg-white w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-            
-            <div class="bg-senaiBlue px-6 py-4 flex justify-between items-center">
-                <h3 class="text-xl font-bold text-white">Ficha de Inscrição</h3>
-                <button id="close-modal-icon" class="text-gray-300 hover:text-white transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-
-            <div class="p-6 overflow-y-auto flex-1">
-                <div class="bg-blue-50 border-l-4 border-senaiBlue p-4 mb-6 rounded-r-md">
-                    <p class="text-sm text-blue-900 font-semibold uppercase tracking-wider">Curso Selecionado</p>
-                    <p id="modal-course-title" class="text-lg font-bold text-gray-900">-</p>
-                    <p id="modal-course-date" class="text-sm text-gray-700">-</p>
-                </div>
-
-                <form id="registration-form" class="space-y-5">
-                    <input type="hidden" id="curso_selecionado" name="curso_selecionado">
-                    
-                    <!-- Dados Pessoais -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div class="md:col-span-2">
-                            <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo *</label>
-                            <input type="text" id="nome" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-senaiBlue">
-                        </div>
-                        <div>
-                            <label for="cpf" class="block text-sm font-medium text-gray-700 mb-1">CPF *</label>
-                            <input type="text" id="cpf" placeholder="000.000.000-00" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-senaiBlue">
-                        </div>
-                        <div>
-                            <label for="whatsapp" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp / Celular *</label>
-                            <input type="tel" id="whatsapp" placeholder="(00) 00000-0000" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-senaiBlue">
-                        </div>
-                    </div>
-
-                    <hr class="border-gray-200">
-
-                    <!-- Envio de Documentos -->
-                    <div>
-                        <h4 class="text-base font-semibold text-gray-900 mb-3">Documentação Obrigatória</h4>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">CNH ou Identidade *</label>
-                                <input type="file" id="doc_identidade" accept=".pdf, image/jpeg, image/png" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-50 file:text-senaiBlue hover:file:bg-blue-100 cursor-pointer">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Documento de CPF (Caso não conste na Identidade)</label>
-                                <input type="file" id="doc_cpf" accept=".pdf, image/jpeg, image/png" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-50 file:text-senaiBlue hover:file:bg-blue-100 cursor-pointer">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Comprovante de Residência *</label>
-                                <input type="file" id="doc_residencia" accept=".pdf, image/jpeg, image/png" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-50 file:text-senaiBlue hover:file:bg-blue-100 cursor-pointer">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Rodapé e Botões -->
-            <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-end gap-3 items-center">
-                <span id="form-feedback" class="text-sm text-senaiBlue font-semibold hidden">Enviando... Aguarde.</span>
-                <button type="button" id="cancel-btn" class="px-5 py-2 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-100 transition">Cancelar</button>
-                <button type="submit" form="registration-form" id="submit-btn" class="px-5 py-2 bg-senaiRed text-white font-bold rounded-md hover:bg-red-700 transition flex items-center">
-                    Enviar Inscrição
-                </button>
-            </div>
-            
+        <div class="flex items-center gap-2">
+          <label for="ordenacao" class="sr-only">Ordenar por</label>
+          <select id="ordenacao" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm font-medium text-slate-700 focus:border-senaiBlue focus:outline-none focus:ring-2 focus:ring-senaiBlue/15 sm:w-auto">
+            <option value="inicio">Ordenar: data de início</option>
+            <option value="nome">Ordenar: nome do curso</option>
+            <option value="vagas">Ordenar: mais vagas</option>
+          </select>
         </div>
+      </div>
+      <div id="filtros" class="noscroll mt-3 flex items-center gap-2 overflow-x-auto pb-1"></div>
     </div>
 
-    <!-- JavaScript de Integração -->
-    <script>
-        // URL gerada pelo Google Apps Script
-        const API_URL = 'https://script.google.com/macros/s/AKfycbyRJ8rDtTeJllSG9LyBcHXKtGB-7C3tVwnDYEzBOaZoWin2M-EGPU_UGbfUjsyl7w1BUg/exec';
+    <div class="mt-5 grid grid-cols-3 gap-3 text-center sm:max-w-lg">
+      <div class="rounded-xl bg-white/10 px-2 py-2.5 ring-1 ring-inset ring-white/15">
+        <p id="stat-cursos" class="text-xl font-extrabold leading-none text-white sm:text-2xl">–</p>
+        <p class="mt-1 text-[10px] font-semibold uppercase tracking-wide text-blue-100 sm:text-[11px]">Cursos</p>
+      </div>
+      <div class="rounded-xl bg-white/10 px-2 py-2.5 ring-1 ring-inset ring-white/15">
+        <p id="stat-vagas" class="text-xl font-extrabold leading-none text-white sm:text-2xl">–</p>
+        <p class="mt-1 text-[10px] font-semibold uppercase tracking-wide text-blue-100 sm:text-[11px]">Vagas livres</p>
+      </div>
+      <div class="rounded-xl bg-white/10 px-2 py-2.5 ring-1 ring-inset ring-white/15">
+        <p class="text-xl font-extrabold leading-none text-white sm:text-2xl">100%</p>
+        <p class="mt-1 text-[10px] font-semibold uppercase tracking-wide text-blue-100 sm:text-[11px]">Gratuito</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // Elementos DOM
-        const grid = document.getElementById('course-grid');
-        const loadingMsg = document.getElementById('loading-msg');
-        const modal = document.getElementById('registration-modal');
-        const form = document.getElementById('registration-form');
-        
-        // Inicialização: Buscar cursos ativos da planilha
-        async function carregarCursos() {
-            try {
-                const response = await fetch(API_URL);
-                const data = await response.json();
-                
-                if (data.status === 'sucesso' && data.cursos.length > 0) {
-                    grid.innerHTML = ''; // Limpa mensagem de carregamento
-                    data.cursos.forEach(curso => renderizarCard(curso));
-                } else {
-                    grid.innerHTML = '<p class="text-gray-500 col-span-full text-center py-10">Nenhum curso disponível no momento.</p>';
-                }
-            } catch (error) {
-                grid.innerHTML = '<p class="text-red-500 col-span-full text-center py-10">Erro ao carregar cursos. Tente novamente mais tarde.</p>';
-            }
-        }
+<main id="cursos" class="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+  <div class="mb-5 flex flex-wrap items-end justify-between gap-2">
+    <div>
+      <h2 class="text-xl font-extrabold tracking-tight text-slate-900 sm:text-2xl">Cursos disponíveis</h2>
+      <p id="contador" class="mt-0.5 text-sm text-slate-500" aria-live="polite">Carregando cursos…</p>
+    </div>
+    <p id="atualizado" class="text-xs text-slate-400"></p>
+  </div>
+  <div id="course-grid" class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3"></div>
+  <div id="estado-vazio" class="hidden rounded-2xl border border-dashed border-slate-300 bg-white/60 px-6 py-12 text-center">
+    <p class="text-base font-bold text-slate-700">Nenhum curso encontrado</p>
+    <p class="mt-1 text-sm text-slate-500">Tente outro termo de busca ou remova os filtros.</p>
+    <button type="button" id="limpar-filtros" class="mt-4 rounded-lg bg-senaiBlue px-4 py-2 text-sm font-bold text-white transition hover:bg-senaiBlueDark">Limpar filtros</button>
+  </div>
+</main>
 
-        // Criar o HTML do card do curso
-        function renderizarCard(curso) {
-            const vagasTotais = parseInt(curso['Vagas Totais']) || 0;
-            const vagasPreenchidas = parseInt(curso['Vagas Preenchidas']) || 0;
-            const vagasRestantes = vagasTotais - vagasPreenchidas;
-            const percentual = vagasTotais > 0 ? (vagasPreenchidas / vagasTotais) * 100 : 0;
-            
-            // Formatando datas que vem do Sheets
-            const inicio = new Date(curso['Inicio']).toLocaleDateString('pt-BR', {timeZone: 'UTC'});
-            const termino = new Date(curso['Termino']).toLocaleDateString('pt-BR', {timeZone: 'UTC'});
+<footer class="mt-auto bg-senaiBlueDark text-blue-100">
+  <div class="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <div class="grid gap-8 sm:grid-cols-3">
+      <div>
+        <div class="inline-block rounded-lg bg-white px-3 py-2"><span class="block text-lg font-black leading-none tracking-tight text-senaiRed">SENAI</span></div>
+        <p class="mt-3 font-bold text-white">SENAI - Ribas do Rio Pardo</p>
+        <p class="text-sm text-blue-200">Ribas do Rio Pardo - MS</p>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-wider text-blue-300">Sobre os cursos</p>
+        <ul class="mt-3 space-y-1.5 text-sm text-blue-100">
+          <li>Todos os cursos são gratuitos</li>
+          <li>Idade mínima: a partir de <span class="idade-minima-texto">16</span> anos</li>
+          <li>Certificado SENAI ao concluir</li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-wider text-blue-300">Atendimento</p>
+        <p class="mt-3 text-sm leading-relaxed text-blue-100">Em caso de dúvidas sobre inscrição, documentos ou turmas, procure a secretaria da unidade do SENAI em Ribas do Rio Pardo.</p>
+      </div>
+    </div>
+    <div class="mt-8 flex flex-col justify-between gap-2 border-t border-white/10 pt-6 text-xs text-blue-200 sm:flex-row">
+      <p>© <span id="ano">2026</span> SENAI - Serviço Nacional de Aprendizagem Industrial · MS</p>
+      <p>Desenvolvido por Stepherson Fontoura - Analista de Sistemas</p>
+    </div>
+  </div>
+</footer>
 
-            const cardHTML = `
-                <div class="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col">
-                    <div class="bg-senaiRed text-white text-xs font-bold px-4 py-1 uppercase tracking-wider">
-                        Início: ${inicio}
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">${curso['Curso']}</h3>
-                        <div class="space-y-2 mb-6">
-                            <p class="text-sm text-gray-600 flex items-center">
-                                Carga Horária: ${curso['Carga Horaria']}
-                            </p>
-                            <p class="text-sm text-gray-600 flex items-center">
-                                ${curso['Turno']} | ${inicio} a ${termino}
-                            </p>
-                        </div>
-                        <div class="mt-auto bg-gray-50 p-4 rounded-lg border border-gray-100">
-                            <div class="flex justify-between text-sm font-medium mb-1">
-                                <span class="text-gray-700">Vagas Preenchidas</span>
-                                <span class="text-senaiBlue">${vagasPreenchidas} / ${vagasTotais}</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-green-500 h-2.5 rounded-full" style="width: ${percentual}%"></div>
-                            </div>
-                            <p class="text-xs text-gray-500 mt-2 text-right">${vagasRestantes} vagas restantes</p>
-                        </div>
-                    </div>
-                    <div class="p-4 bg-gray-50 border-t border-gray-100">
-                        <button onclick="abrirModal('${curso['Curso']}', '${inicio}', '${curso['Turno']}')" class="w-full bg-senaiBlue hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-md transition text-sm" ${vagasRestantes <= 0 ? 'disabled' : ''}>
-                            ${vagasRestantes <= 0 ? 'Turma Lotada' : 'Garantir Vaga'}
-                        </button>
-                    </div>
-                </div>
-            `;
-            grid.insertAdjacentHTML('beforeend', cardHTML);
-        }
+<div id="modal" class="hidden fixed inset-0 z-50 items-end justify-center bg-slate-900/60 p-0 backdrop-blur-sm sm:items-center sm:p-4">
+  <div id="modal-painel" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" class="flex h-[100dvh] w-full flex-col overflow-hidden bg-white shadow-2xl sm:h-auto sm:max-h-[92vh] sm:max-w-2xl sm:rounded-2xl">
+    <div class="flex items-start justify-between gap-3 bg-senaiBlue px-4 py-3.5 sm:px-6">
+      <div class="min-w-0">
+        <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-200">Ficha de inscrição</p>
+        <h2 id="modal-titulo" class="truncate text-lg font-bold text-white">Curso</h2>
+        <p id="modal-meta" class="mt-0.5 truncate text-xs text-blue-100">–</p>
+      </div>
+      <button type="button" id="fechar-modal" aria-label="Fechar" class="-mr-1 shrink-0 rounded-lg p-2 text-blue-100 transition hover:bg-white/10 hover:text-white">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
 
-        // Funções do Modal
-        function abrirModal(nomeCurso, inicio, turno) {
-            document.getElementById('curso_selecionado').value = nomeCurso;
-            document.getElementById('modal-course-title').innerText = nomeCurso;
-            document.getElementById('modal-course-date').innerText = `Início: ${inicio} | ${turno}`;
-            modal.classList.remove('hidden');
-        }
+    <div id="view-form" class="flex-1 overflow-y-auto px-4 py-5 sm:px-6">
+      <form id="ficha" novalidate class="space-y-6">
+        <section>
+          <h3 class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Seus dados</h3>
+          <div class="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div class="sm:col-span-2">
+              <label for="nome" class="mb-1 block text-sm font-semibold text-slate-700">Nome completo <span class="text-senaiRed">*</span></label>
+              <input id="nome" type="text" autocomplete="name" class="campo" placeholder="Como está no documento">
+              <p class="erro" id="erro-nome"></p>
+            </div>
+            <div class="sm:col-span-2">
+              <label for="email" class="mb-1 block text-sm font-semibold text-slate-700">E-mail <span class="text-senaiRed">*</span></label>
+              <input id="email" type="email" inputmode="email" autocomplete="email" class="campo" placeholder="nome@exemplo.com">
+              <p class="erro" id="erro-email"></p>
+            </div>
+            <div>
+              <label for="cpf" class="mb-1 block text-sm font-semibold text-slate-700">CPF <span class="text-senaiRed">*</span></label>
+              <input id="cpf" type="text" inputmode="numeric" autocomplete="off" class="campo" placeholder="000.000.000-00">
+              <p class="erro" id="erro-cpf"></p>
+            </div>
+            <div>
+              <label for="whatsapp" class="mb-1 block text-sm font-semibold text-slate-700">WhatsApp <span class="text-senaiRed">*</span></label>
+              <input id="whatsapp" type="tel" inputmode="tel" autocomplete="tel" class="campo" placeholder="(67) 99999-9999">
+              <p class="erro" id="erro-whatsapp"></p>
+            </div>
+          </div>
+        </section>
 
-        function fecharModal() {
-            modal.classList.add('hidden');
-            form.reset();
-        }
+        <hr class="border-slate-200">
 
-        document.getElementById('close-modal-icon').addEventListener('click', fecharModal);
-        document.getElementById('cancel-btn').addEventListener('click', fecharModal);
-        modal.addEventListener('click', (e) => { if(e.target === modal) fecharModal(); });
+        <section>
+          <h3 class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Documentos</h3>
+          <p class="mt-2 text-xs leading-relaxed text-slate-500">Aceitamos PDF, JPG ou PNG, até <strong>5 MB</strong> por arquivo. Pelo celular, você pode fotografar o documento na hora.</p>
+          <div class="mt-4 space-y-4">
+            <div>
+              <label for="doc_identidade" class="mb-1.5 block text-sm font-semibold text-slate-700">RG ou CNH <span class="text-senaiRed">*</span></label>
+              <input id="doc_identidade" type="file" accept="application/pdf,image/*" class="arquivo">
+              <p class="erro" id="erro-doc_identidade"></p>
+            </div>
+            <div>
+              <label for="doc_cpf" class="mb-1.5 block text-sm font-semibold text-slate-700">CPF (somente se não constar na identidade)</label>
+              <input id="doc_cpf" type="file" accept="application/pdf,image/*" class="arquivo">
+              <p class="erro" id="erro-doc_cpf"></p>
+            </div>
+            <div>
+              <label for="doc_residencia" class="mb-1.5 block text-sm font-semibold text-slate-700">Comprovante de residência <span class="text-senaiRed">*</span></label>
+              <input id="doc_residencia" type="file" accept="application/pdf,image/*" class="arquivo">
+              <p class="erro" id="erro-doc_residencia"></p>
+            </div>
+            <div>
+              <label for="doc_escolaridade" class="mb-1.5 block text-sm font-semibold text-slate-700">Comprovante de escolaridade <span class="text-senaiRed">*</span></label>
+              <input id="doc_escolaridade" type="file" accept="application/pdf,image/*" class="arquivo">
+              <p class="erro" id="erro-doc_escolaridade"></p>
+            </div>
+          </div>
+        </section>
 
-        // Conversor de Arquivo para Base64
-        const toBase64 = file => new Promise((resolve, reject) => {
-            if (!file) { resolve(null); return; }
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        });
+        <div>
+          <label class="flex cursor-pointer items-start gap-3 rounded-xl bg-slate-50 p-3.5 ring-1 ring-slate-200">
+            <input id="aceite" type="checkbox" class="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-senaiBlue focus:ring-senaiBlue">
+            <span class="text-xs leading-relaxed text-slate-600">Autorizo o SENAI a utilizar meus dados e documentos exclusivamente para análise da matrícula, contato sobre o curso e registro acadêmico, conforme a Lei Geral de Proteção de Dados (LGPD).</span>
+          </label>
+          <p class="erro" id="erro-aceite"></p>
+        </div>
 
-        // Envio do Formulário para a API
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submit-btn');
-            const feedback = document.getElementById('form-feedback');
-            
-            submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-50');
-            feedback.classList.remove('hidden');
-            feedback.innerText = 'Enviando documentos... Aguarde.';
+        <p id="form-aviso" class="hidden rounded-lg bg-rose-50 px-3 py-2.5 text-sm font-medium text-rose-700 ring-1 ring-rose-200" role="alert"></p>
+      </form>
+    </div>
 
-            try {
-                // Captura os arquivos
-                const fileDoc = document.getElementById('doc_identidade').files[0];
-                const fileCpf = document.getElementById('doc_cpf').files[0];
-                const fileRes = document.getElementById('doc_residencia').files[0];
+    <div id="view-sucesso" class="hidden flex-1 overflow-y-auto px-5 py-8 text-center sm:px-8">
+      <div class="mx-auto grid h-16 w-16 place-items-center rounded-full bg-emerald-100 text-emerald-600">
+        <svg class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
+      </div>
+      <h3 class="mt-4 text-xl font-extrabold text-slate-900">Inscrição enviada!</h3>
+      <p id="sucesso-texto" class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-slate-600"></p>
+      <div class="mx-auto mt-5 max-w-md space-y-2 rounded-xl bg-slate-50 p-4 text-left text-sm text-slate-700 ring-1 ring-slate-200">
+        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Próximos passos</p>
+        <p>1. Entre no grupo da turma no WhatsApp para receber os avisos.</p>
+        <p>2. A secretaria vai conferir seus documentos e confirmar a matrícula.</p>
+        <p>3. Em caso de dúvida, procure a unidade do SENAI em Ribas do Rio Pardo.</p>
+      </div>
+      <a id="link-grupo" href="#" target="_blank" rel="noopener" class="mt-5 hidden w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3 text-sm font-bold text-white transition hover:bg-emerald-700 sm:w-auto sm:inline-flex">
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.42 1.27 4.86L2 22l5.32-1.39a9.9 9.9 0 0 0 4.72 1.2h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2Zm5.8 14.13c-.24.68-1.42 1.3-1.95 1.35-.53.05-1.02.24-3.46-.73-2.94-1.17-4.77-4.2-4.91-4.4-.14-.2-1.16-1.56-1.16-2.97 0-1.41.73-2.1.99-2.39.26-.29.56-.36.75-.36s.38 0 .54.01c.17.01.4-.07.63.48.24.56.8 1.97.87 2.11.07.15.12.32.02.51-.1.2-.15.32-.29.49-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.75 1.24 1.61 2.01 1.11.99 2.05 1.3 2.34 1.45.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.19-.29.39-.24.65-.14.27.09 1.68.79 1.97.94.29.15.48.22.55.34.07.13.07.73-.17 1.41Z"/></svg>
+        Entrar no grupo do WhatsApp
+      </a>
+    </div>
 
-                // Converte para Base64
-                const base64Doc = await toBase64(fileDoc);
-                const base64Cpf = await toBase64(fileCpf);
-                const base64Res = await toBase64(fileRes);
+    <div class="flex items-center justify-between gap-3 border-t border-slate-200 bg-white px-4 py-3 sm:px-6">
+      <p id="progresso" class="hidden text-xs font-semibold text-senaiBlue">Enviando… aguarde</p>
+      <div class="ml-auto flex items-center gap-2">
+        <button type="button" id="cancelar" class="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">Cancelar</button>
+        <button type="submit" form="ficha" id="enviar" class="inline-flex items-center gap-2 rounded-lg bg-senaiRed px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60">
+          <span id="enviar-texto">Enviar inscrição</span>
+          <svg id="enviar-spinner" class="hidden h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"/><path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.4 0 0 5.4 0 12h4Z"/></svg>
+        </button>
+        <button type="button" id="concluir" class="hidden rounded-lg bg-senaiBlue px-5 py-2.5 text-sm font-bold text-white transition hover:bg-senaiBlueDark">Concluir</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-                // Monta o pacote de dados JSON (Payload)
-                const payload = {
-                    curso: document.getElementById('curso_selecionado').value,
-                    nome: document.getElementById('nome').value,
-                    cpf: document.getElementById('cpf').value,
-                    whatsapp: document.getElementById('whatsapp').value,
-                    
-                    arquivoDoc: base64Doc,
-                    tipoDoc: fileDoc ? fileDoc.type : '',
-                    
-                    arquivoCpf: base64Cpf,
-                    tipoCpf: fileCpf ? fileCpf.type : '',
-                    
-                    arquivoRes: base64Res,
-                    tipoRes: fileRes ? fileRes.type : ''
-                };
+<noscript>
+  <div class="bg-amber-100 px-4 py-3 text-center text-sm font-semibold text-amber-900">Ative o JavaScript do navegador para ver os cursos e fazer sua inscrição.</div>
+</noscript>
 
-                // Dispara POST para o Google Apps Script
-                const res = await fetch(API_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(payload)
-                });
-                
-                const resultado = await res.json();
-                
-                if (resultado.status === 'sucesso') {
-                    alert('Inscrição realizada com sucesso! Seus documentos foram enviados.');
-                    fecharModal();
-                    window.location.reload(); // Recarrega a página automaticamente para atualizar o contador
-                } else {
-                    alert('Houve um erro no servidor: ' + resultado.mensagem);
-                }
+<script>
+/* CONFIGURAÇÕES — altere aqui quando necessário */
+const CONFIG = {
+  API_URL: 'https://script.google.com/macros/s/AKfycbziLTDD2J4hikd0m7jnxIXV9_od8pTIkRw3Fhwf9DNcdRq2eAPwOobdp5S_3CYVoMQ6pA/exec',
+  IDADE_MINIMA: 16,
+  MB_MAX_ARQUIVO: 5,
+  TIPOS_ACEITOS: ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/heic'],
+  TEMPO_MAX_ENVIO: 120000
+};
 
-            } catch (error) {
-                alert('Erro na comunicação. Verifique sua conexão e tente novamente.');
-                console.error(error);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-50');
-                feedback.classList.add('hidden');
-            }
-        });
+const $ = (id) => document.getElementById(id);
+const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const soDigitos = (v) => String(v ?? '').replace(/\D+/g, '');
+const inteiro = (v) => { const n = parseInt(String(v ?? '').replace(/[^\d-]/g, ''), 10); return isNaN(n) ? 0 : n; };
+const texto = (v) => String(v ?? '').trim();
 
-        // Executar carregamento ao abrir a página
-        carregarCursos();
-    </script>
+function parseData(valor) {
+  if (!valor) return null;
+  if (valor instanceof Date) return isNaN(valor) ? null : valor;
+  const s = String(valor).trim();
+  let m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
+  m = s.match(/^(\d{2})\/(\d{2})\/(\d{4})/);
+  if (m) return new Date(+m[3], +m[2] - 1, +m[1]);
+  return null;
+}
+const fmtData = (d) => (d ? d.toLocaleDateString('pt-BR') : 'A definir');
+const fmtDataHora = (d) => d.toLocaleDateString('pt-BR') + ' às ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+let cursos = [];
+let filtroTurno = 'todos';
+let somenteComVagas = false;
+let termoBusca = '';
+let ordenacao = 'inicio';
+let cursoSelecionado = null;
+let enviando = false;
+let focoAnterior = null;
+
+const modal = $('modal');
+const grid = $('course-grid');
+
+const ICONES = {
+  escudo: '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M12 3l7.5 3v5.25c0 4.5-3 8.25-7.5 9.75-4.5-1.5-7.5-5.25-7.5-9.75V6L12 3Z"/>',
+  engrenagem: '<path stroke-linecap="round" stroke-linejoin="round" d="M10.34 3.94c.09-.54.56-.94 1.11-.94h1.1c.55 0 1.02.4 1.11.94l.15.9c.05.31.27.56.55.68.29.12.62.12.9-.01l.83-.4c.5-.24 1.09-.07 1.38.4l.55.95c.27.47.16 1.07-.26 1.4l-.71.56c-.24.19-.34.5-.26.79.08.29.32.51.61.57l.88.17c.54.1.94.57.94 1.12v1.1c0 .55-.4 1.02-.94 1.11l-.88.17c-.3.06-.53.28-.61.57-.08.3.02.6.26.79l.71.56c.42.33.53.93.26 1.4l-.55.95c-.29.47-.88.64-1.38.4l-.83-.4c-.28-.13-.61-.13-.9-.01-.28.12-.5.37-.55.68l-.15.9c-.09.54-.56.94-1.11.94h-1.1c-.55 0-1.02-.4-1.11-.94l-.15-.9a.94.94 0 0 0-.55-.68 1 1 0 0 0-.9.01l-.83.4c-.5.24-1.09.07-1.38-.4l-.55-.95a1.1 1.1 0 0 1 .26-1.4l.71-.56c.24-.19.34-.5.26-.79a.94.94 0 0 0-.61-.57l-.88-.17A1.12 1.12 0 0 1 3 12.05v-1.1c0-.55.4-1.02.94-1.12l.88-.17c.3-.06.53-.28.61-.57.08-.3-.02-.6-.26-.79l-.71-.56a1.1 1.1 0 0 1-.26-1.4l.55-.95c.29-.47.88-.64 1.38-.4l.83.4c.28.13.61.13.9.01.28-.12.5-.37.55-.68l.15-.9Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z"/>',
+  grafico: '<path stroke-linecap="round" stroke-linejoin="round" d="M3 13.5h4.5V21H3v-7.5Zm6.75-6h4.5V21h-4.5V7.5ZM16.5 3H21v18h-4.5V3Z"/>',
+  raio: '<path stroke-linecap="round" stroke-linejoin="round" d="m13.5 3-7.5 10.5H12L10.5 21 18 10.5h-5.25L13.5 3Z"/>',
+  lampada: '<path stroke-linecap="round" stroke-linejoin="round" d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.4.3.6.7.6 1.2v1h6v-1c0-.5.2-.9.6-1.2A6 6 0 0 0 12 3Z"/>',
+  livro: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 6.25c-1.5-1.4-3.6-2-6.75-2A.75.75 0 0 0 4.5 5v13c0 .5.4.9 1 .9 2.9 0 5 .5 6.5 1.85 1.5-1.35 3.6-1.85 6.5-1.85.6 0 1-.4 1-.9V5a.75.75 0 0 0-.75-.75c-3.15 0-5.25.6-6.75 2Zm0 0V20"/>'
+};
+
+function iconeDoCurso(nome) {
+  const n = nome.toLowerCase();
+  if (/(seguran|sa[uú]de|socorros)/.test(n)) return ICONES.escudo;
+  if (/(mec[aâ]nic|produ[cç][aã]o|automa|metalmec|solda|usinagem|manuten)/.test(n)) return ICONES.engrenagem;
+  if (/(excel|inform[aá]tica|comput|dados|planilha|office|log[ií]stica)/.test(n)) return ICONES.grafico;
+  if (/(el[eé]tric|energia|eletr[oô])/.test(n)) return ICONES.raio;
+  if (/(empreend|inov|gest[aã]o|neg[oó]cio|conectando)/.test(n)) return ICONES.lampada;
+  return ICONES.livro;
+}
+
+function normalizar(item) {
+  const nome = texto(item.curso ?? item.Curso);
+  if (!nome) return null;
+  const total = inteiro(item.vagasTotais ?? item['Vagas Totais']);
+  const preench = inteiro(item.vagasPreenchidas ?? item['Vagas Preenchidas']);
+  const termino = parseData(item.termino ?? item.Termino);
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0);
+  return {
+    id: texto(item.id ?? item.ID),
+    nome,
+    carga: texto(item.cargaHoraria ?? item['Carga Horaria']) || 'A definir',
+    turno: texto(item.turno ?? item.Turno) || 'A definir',
+    inicio: parseData(item.inicio ?? item.Inicio),
+    termino,
+    total: Math.max(0, total),
+    preench: Math.max(0, preench),
+    restantes: Math.max(0, total - preench),
+    linkGrupo: texto(item.linkGrupo ?? item['Link do Grupo']),
+    encerrado: !!(termino && termino < hoje)
+  };
+}
+
+function turnoCurto(turno) {
+  const t = texto(turno);
+  if (!t || /a definir/i.test(t)) return 'A definir';
+  return t.split('-')[0].trim();
+}
+
+async function carregarCursos() {
+  mostrarSkeletons();
+  try {
+    const url = CONFIG.API_URL + (CONFIG.API_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
+    const resposta = await fetch(url, { cache: 'no-store' });
+    if (!resposta.ok) throw new Error('HTTP ' + resposta.status);
+    const dados = await resposta.json();
+    if (dados.status !== 'sucesso') throw new Error(dados.mensagem || 'Resposta inválida do servidor');
+
+    cursos = (dados.cursos || []).map(normalizar).filter(Boolean);
+    atualizarEstatisticas();
+    montarFiltros();
+    renderizar();
+
+    const atualizado = dados.atualizadoEm ? new Date(dados.atualizadoEm) : new Date();
+    $('atualizado').textContent = 'Atualizado em ' + fmtDataHora(atualizado);
+  } catch (erro) {
+    console.error(erro);
+    grid.innerHTML = '';
+    const vazio = $('estado-vazio');
+    vazio.classList.remove('hidden');
+    vazio.innerHTML = '<p class="text-base font-bold text-slate-700">Não foi possível carregar os cursos</p>'
+      + '<p class="mt-1 text-sm text-slate-500">Verifique sua conexão e tente novamente.</p>'
+      + '<button type="button" id="tentar-novamente" class="mt-4 rounded-lg bg-senaiBlue px-4 py-2 text-sm font-bold text-white transition hover:bg-senaiBlueDark">Tentar novamente</button>';
+    $('tentar-novamente').addEventListener('click', carregarCursos);
+    $('contador').textContent = 'Sem conexão com a base de cursos';
+  }
+}
+
+function atualizarEstatisticas() {
+  const disponiveis = cursos.filter((c) => !c.encerrado);
+  $('stat-cursos').textContent = disponiveis.length;
+  $('stat-vagas').textContent = disponiveis.reduce((soma, c) => soma + c.restantes, 0);
+}
+
+function mostrarSkeletons() {
+  $('estado-vazio').classList.add('hidden');
+  grid.innerHTML = Array.from({ length: 6 }).map(() =>
+    '<div class="animate-pulse overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200"><div class="h-1.5 bg-slate-200"></div>'
+    + '<div class="space-y-3 p-5"><div class="h-4 w-24 rounded bg-slate-200"></div><div class="h-6 w-3/4 rounded bg-slate-200"></div>'
+    + '<div class="h-4 w-1/2 rounded bg-slate-100"></div><div class="h-4 w-2/3 rounded bg-slate-100"></div>'
+    + '<div class="h-2 w-full rounded-full bg-slate-100"></div><div class="h-10 w-full rounded-lg bg-slate-100"></div></div></div>'
+  ).join('');
+}
+
+function montarFiltros() {
+  const turnos = [...new Set(cursos.map((c) => turnoCurto(c.turno)))].filter((t) => t && t !== 'A definir');
+  const chip = (valor, rotulo, ativo) => '<button type="button" data-filtro="' + esc(valor) + '" class="shrink-0 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-bold transition '
+    + (ativo ? 'bg-senaiBlue text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200') + '">' + esc(rotulo) + '</button>';
+
+  let html = chip('todos', 'Todos os turnos', filtroTurno === 'todos');
+  turnos.forEach((t) => { html += chip(t, t, filtroTurno === t); });
+  html += '<span class="mx-1 h-5 w-px shrink-0 bg-slate-200"></span>';
+  html += '<button type="button" id="chip-vagas" class="shrink-0 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-bold transition '
+    + (somenteComVagas ? 'bg-emerald-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200') + '">Somente com vagas</button>';
+
+  $('filtros').innerHTML = html;
+  $('filtros').querySelectorAll('[data-filtro]').forEach((botao) => {
+    botao.addEventListener('click', () => { filtroTurno = botao.dataset.filtro; montarFiltros(); renderizar(); });
+  });
+  $('chip-vagas').addEventListener('click', () => { somenteComVagas = !somenteComVagas; montarFiltros(); renderizar(); });
+}
+
+function listaFiltrada() {
+  const termo = termoBusca.toLowerCase();
+  const lista = cursos.filter((c) => {
+    if (filtroTurno !== 'todos' && turnoCurto(c.turno) !== filtroTurno) return false;
+    if (somenteComVagas && (c.encerrado || (c.total > 0 && c.restantes === 0))) return false;
+    if (termo && !(c.nome + ' ' + c.carga + ' ' + c.turno).toLowerCase().includes(termo)) return false;
+    return true;
+  });
+
+  if (ordenacao === 'nome') lista.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+  else if (ordenacao === 'vagas') lista.sort((a, b) => b.restantes - a.restantes);
+  else lista.sort((a, b) => {
+    if (!a.inicio && !b.inicio) return a.nome.localeCompare(b.nome, 'pt-BR');
+    if (!a.inicio) return 1;
+    if (!b.inicio) return -1;
+    return a.inicio - b.inicio;
+  });
+  return lista;
+}
+
+function situacao(c) {
+  if (c.encerrado) return { rotulo: 'Encerrado', cor: 'bg-slate-100 text-slate-500', ponto: 'bg-slate-400', barra: 'bg-slate-300', pode: false, cta: 'Inscrições encerradas' };
+  if (c.total > 0 && c.restantes === 0) return { rotulo: 'Vagas esgotadas', cor: 'bg-slate-100 text-slate-500', ponto: 'bg-slate-400', barra: 'bg-slate-300', pode: false, cta: 'Turma lotada' };
+  if (c.restantes > 0 && c.restantes <= 5) return { rotulo: 'Últimas vagas', cor: 'bg-amber-100 text-amber-800', ponto: 'bg-amber-500', barra: 'bg-amber-500', pode: true, cta: 'Fazer inscrição' };
+  if (!c.inicio) return { rotulo: 'Início a definir', cor: 'bg-blue-100 text-blue-800', ponto: 'bg-blue-500', barra: 'bg-blue-500', pode: true, cta: 'Fazer inscrição' };
+  return { rotulo: 'Inscrições abertas', cor: 'bg-emerald-100 text-emerald-800', ponto: 'bg-emerald-500', barra: 'bg-emerald-500', pode: true, cta: 'Fazer inscrição' };
+}
+
+function cardHTML(c, indice) {
+  const s = situacao(c);
+  const pct = c.total > 0 ? Math.min(100, Math.round((c.preench / c.total) * 100)) : 0;
+  const chave = c.id || c.nome;
+  const periodo = (c.inicio || c.termino) ? fmtData(c.inicio) + ' a ' + fmtData(c.termino) : 'Data de início a definir';
+  const vagasTexto = c.total > 0 ? c.preench + ' de ' + c.total + ' vagas preenchidas' : 'Vagas a definir';
+
+  return '<article class="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-xl hover:ring-slate-300 animate-fade-up" style="animation-delay:' + Math.min(indice * 45, 400) + 'ms">'
+    + '<div class="flex items-center justify-between gap-2 px-4 pt-4 sm:px-5">'
+    + '<span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ' + s.cor + '"><span class="h-1.5 w-1.5 rounded-full ' + s.ponto + '"></span>' + esc(s.rotulo) + '</span>'
+    + '<span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700">Gratuito</span></div>'
+    + '<div class="px-4 pt-3 sm:px-5"><div class="flex items-start gap-3">'
+    + '<span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-senaiBlue/5 text-senaiBlue ring-1 ring-inset ring-senaiBlue/10"><svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24" aria-hidden="true">' + iconeDoCurso(c.nome) + '</svg></span>'
+    + '<h3 class="pt-0.5 text-base font-bold leading-snug text-slate-900 sm:text-[1.05rem]">' + esc(c.nome) + '</h3></div>'
+    + '<dl class="mt-4 space-y-2 text-sm text-slate-600">'
+    + '<div class="flex items-start gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>'
+    + '<span><span class="font-semibold text-slate-700">Carga horária:</span> ' + esc(c.carga) + '</span></div>'
+    + '<div class="flex items-start gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25M12 18.75V21M4.5 12H2.25M21.75 12H19.5M18.36 5.64l-1.59 1.59M7.23 16.77l-1.59 1.59M18.36 18.36l-1.59-1.59M7.23 7.23 5.64 5.64M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z"/></svg>'
+    + '<span><span class="font-semibold text-slate-700">Turno:</span> ' + esc(c.turno) + '</span></div>'
+    + '<div class="flex items-start gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5A2.25 2.25 0 0 1 5.25 5.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>'
+    + '<span><span class="font-semibold text-slate-700">Período:</span> ' + esc(periodo) + '</span></div></dl></div>'
+    + '<div class="mt-4 px-4 sm:px-5"><div class="mb-1.5 flex items-baseline justify-between text-xs">'
+    + '<span class="font-semibold text-slate-600">' + vagasTexto + '</span>'
+    + '<span class="font-bold ' + (c.restantes === 0 ? 'text-slate-400' : 'text-senaiBlue') + '">' + (c.total > 0 ? c.restantes + ' restantes' : '') + '</span></div>'
+    + '<div class="h-2 w-full overflow-hidden rounded-full bg-slate-100"><div class="h-full rounded-full ' + s.barra + ' transition-all duration-500" style="width:' + pct + '%"></div></div></div>'
+    + '<div class="mt-auto p-4 pt-4 sm:px-5"><button type="button" data-inscrever="' + esc(chave) + '" ' + (s.pode ? '' : 'disabled') + ' class="w-full rounded-xl px-4 py-2.5 text-sm font-bold transition '
+    + (s.pode ? 'bg-senaiBlue text-white shadow-sm hover:bg-senaiBlueDark active:scale-[.99]' : 'cursor-not-allowed bg-slate-100 text-slate-400') + '">' + esc(s.cta) + '</button></div></article>';
+}
+
+function renderizar() {
+  const lista = listaFiltrada();
+  grid.innerHTML = lista.map(cardHTML).join('');
+  $('estado-vazio').classList.toggle('hidden', lista.length > 0);
+  const total = cursos.length;
+  $('contador').textContent = total === 0
+    ? 'Nenhum curso cadastrado no momento'
+    : lista.length + ' de ' + total + (total === 1 ? ' curso exibido' : ' cursos exibidos');
+}
+
+grid.addEventListener('click', (evento) => {
+  const botao = evento.target.closest('[data-inscrever]');
+  if (botao) abrirModal(botao.dataset.inscrever);
+});
+$('busca').addEventListener('input', (e) => { termoBusca = e.target.value.trim(); renderizar(); });
+$('ordenacao').addEventListener('change', (e) => { ordenacao = e.target.value; renderizar(); });
+$('limpar-filtros').addEventListener('click', () => {
+  termoBusca = ''; filtroTurno = 'todos'; somenteComVagas = false; $('busca').value = '';
+  montarFiltros(); renderizar();
+});
+
+function abrirModal(chave) {
+  const curso = cursos.find((c) => String(c.id) === String(chave)) || cursos.find((c) => c.nome === chave);
+  if (!curso) return;
+  cursoSelecionado = curso;
+  focoAnterior = document.activeElement;
+  $('modal-titulo').textContent = curso.nome;
+  $('modal-meta').textContent = [curso.carga, curso.turno, fmtData(curso.inicio)].filter(Boolean).join(' · ');
+
+  $('ficha').reset();
+  limparErros();
+  $('form-aviso').classList.add('hidden');
+  $('view-form').classList.remove('hidden');
+  $('view-sucesso').classList.add('hidden');
+  $('enviar').classList.remove('hidden');
+  $('cancelar').classList.remove('hidden');
+  $('concluir').classList.add('hidden');
+  setEnviando(false);
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => $('nome').focus(), 80);
+}
+
+function fecharModal() {
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+  document.body.style.overflow = '';
+  cursoSelecionado = null;
+  if (focoAnterior && typeof focoAnterior.focus === 'function') focoAnterior.focus();
+}
+
+$('fechar-modal').addEventListener('click', fecharModal);
+$('cancelar').addEventListener('click', fecharModal);
+$('concluir').addEventListener('click', () => { fecharModal(); carregarCursos(); });
+modal.addEventListener('click', (e) => { if (e.target === modal) fecharModal(); });
+
+document.addEventListener('keydown', (e) => {
+  if (modal.classList.contains('hidden')) return;
+  if (e.key === 'Escape') { fecharModal(); return; }
+  if (e.key === 'Tab') {
+    const focaveis = $('modal-painel').querySelectorAll('button:not([disabled]):not(.hidden), input:not([disabled]), a[href], select');
+    const visiveis = [...focaveis].filter((el) => el.offsetParent !== null);
+    if (!visiveis.length) return;
+    if (e.shiftKey && document.activeElement === visiveis[0]) { e.preventDefault(); visiveis[visiveis.length - 1].focus(); }
+    else if (!e.shiftKey && document.activeElement === visiveis[visiveis.length - 1]) { e.preventDefault(); visiveis[0].focus(); }
+  }
+});
+
+function mascaraCpf(valor) {
+  const d = soDigitos(valor).slice(0, 11);
+  return d.replace(/^(\d{3})(\d)/, '$1.$2').replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3').replace(/\.(\d{3})(\d{1,2})$/, '.$1-$2');
+}
+function mascaraTelefone(valor) {
+  const d = soDigitos(valor).slice(0, 11);
+  if (!d.length) return '';
+  if (d.length <= 2) return '(' + d;
+  if (d.length <= 6) return '(' + d.slice(0, 2) + ') ' + d.slice(2);
+  if (d.length <= 10) return '(' + d.slice(0, 2) + ') ' + d.slice(2, 6) + '-' + d.slice(6);
+  return '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7);
+}
+$('cpf').addEventListener('input', (e) => { e.target.value = mascaraCpf(e.target.value); });
+$('whatsapp').addEventListener('input', (e) => { e.target.value = mascaraTelefone(e.target.value); });
+
+function cpfValido(cpf) {
+  if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+  let soma = 0;
+  for (let i = 0; i < 9; i++) soma += parseInt(cpf[i], 10) * (10 - i);
+  let dv1 = (soma * 10) % 11; if (dv1 === 10) dv1 = 0;
+  if (dv1 !== parseInt(cpf[9], 10)) return false;
+  soma = 0;
+  for (let i = 0; i < 10; i++) soma += parseInt(cpf[i], 10) * (11 - i);
+  let dv2 = (soma * 10) % 11; if (dv2 === 10) dv2 = 0;
+  return dv2 === parseInt(cpf[10], 10);
+}
+
+function marcarErro(campo, mensagem) {
+  const alvo = $(campo);
+  if (alvo) alvo.classList.add('campo-invalido');
+  const textoErro = $('erro-' + campo);
+  if (textoErro) { textoErro.textContent = mensagem; textoErro.classList.add('ativo'); }
+  return false;
+}
+
+function limparErros() {
+  document.querySelectorAll('.erro').forEach((el) => { el.textContent = ''; el.classList.remove('ativo'); });
+  document.querySelectorAll('.campo-invalido').forEach((el) => el.classList.remove('campo-invalido'));
+}
+
+function arquivoValido(input, rotulo, obrigatorio) {
+  const arquivo = $(input).files[0];
+  if (!arquivo) return obrigatorio ? marcarErro(input, rotulo + ' é obrigatório.') : true;
+  if (!CONFIG.TIPOS_ACEITOS.includes(arquivo.type)) return marcarErro(input, 'Formato não aceito. Envie PDF, JPG ou PNG.');
+  if (arquivo.size > CONFIG.MB_MAX_ARQUIVO * 1024 * 1024) {
+    return marcarErro(input, 'Arquivo muito grande (' + (arquivo.size / 1048576).toFixed(1) + ' MB). Limite: ' + CONFIG.MB_MAX_ARQUIVO + ' MB.');
+  }
+  return true;
+}
+
+function validarFormulario() {
+  limparErros();
+  const aviso = $('form-aviso');
+  aviso.classList.add('hidden');
+  let ok = true;
+
+  const nome = $('nome').value.trim();
+  if (nome.length < 5 || nome.split(/\s+/).filter(Boolean).length < 2) ok = marcarErro('nome', 'Informe seu nome completo (nome e sobrenome).');
+
+  const email = $('email').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email)) ok = marcarErro('email', 'Informe um e-mail válido.');
+
+  const cpf = soDigitos($('cpf').value);
+  if (!cpfValido(cpf)) ok = marcarErro('cpf', 'CPF inválido. Confira os números digitados.');
+
+  const whatsapp = soDigitos($('whatsapp').value);
+  if (whatsapp.length < 10 || whatsapp.length > 11) ok = marcarErro('whatsapp', 'Informe o WhatsApp com DDD.');
+
+  ok = arquivoValido('doc_identidade', 'O documento de identidade', true) && ok;
+  ok = arquivoValido('doc_cpf', 'O documento de CPF', false) && ok;
+  ok = arquivoValido('doc_residencia', 'O comprovante de residência', true) && ok;
+  ok = arquivoValido('doc_escolaridade', 'O comprovante de escolaridade', true) && ok;
+
+  if (!$('aceite').checked) ok = marcarErro('aceite', 'É necessário autorizar o uso dos dados para concluir a inscrição.');
+
+  if (!ok) {
+    aviso.textContent = 'Confira os campos destacados antes de enviar.';
+    aviso.classList.remove('hidden');
+    const primeiroErro = document.querySelector('.campo-invalido');
+    if (primeiroErro) primeiroErro.focus();
+    return null;
+  }
+
+  return {
+    nome, email, cpf,
+    whatsapp: mascaraTelefone(whatsapp),
+    docIdentidade: $('doc_identidade').files[0],
+    docCpf: $('doc_cpf').files[0] || null,
+    docResidencia: $('doc_residencia').files[0],
+    docEscolaridade: $('doc_escolaridade').files[0]
+  };
+}
+
+function lerBase64(arquivo) {
+  return new Promise((resolve, reject) => {
+    const leitor = new FileReader();
+    leitor.onload = () => resolve(leitor.result);
+    leitor.onerror = () => reject(new Error('Falha ao ler o arquivo ' + arquivo.name));
+    leitor.readAsDataURL(arquivo);
+  });
+}
+
+function comprimirImagem(arquivo) {
+  return new Promise((resolve) => {
+    if (!arquivo.type.startsWith('image/') || arquivo.size < 700 * 1024) return resolve(arquivo);
+    const img = new Image();
+    const url = URL.createObjectURL(arquivo);
+    img.onload = () => {
+      const lado = 1600;
+      const escala = Math.min(1, lado / Math.max(img.width, img.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.width * escala);
+      canvas.height = Math.round(img.height * escala);
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      canvas.toBlob((blob) => {
+        if (!blob) return resolve(arquivo);
+        resolve(new File([blob], arquivo.name.replace(/\.[^.]+$/, '') + '.jpg', { type: 'image/jpeg' }));
+      }, 'image/jpeg', 0.82);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); resolve(arquivo); };
+    img.src = url;
+  });
+}
+
+async function prepararArquivo(arquivo) {
+  if (!arquivo) return { dados: null, tipo: '' };
+  const pronto = await comprimirImagem(arquivo);
+  return { dados: await lerBase64(pronto), tipo: pronto.type };
+}
+
+function setEnviando(estado, mensagem) {
+  enviando = estado;
+  $('enviar').disabled = estado;
+  $('cancelar').disabled = estado;
+  $('enviar-spinner').classList.toggle('hidden', !estado);
+  $('enviar-texto').textContent = estado ? 'Enviando…' : 'Enviar inscrição';
+  $('progresso').classList.toggle('hidden', !estado);
+  if (mensagem) $('progresso').textContent = mensagem;
+}
+
+$('ficha').addEventListener('submit', async (evento) => {
+  evento.preventDefault();
+  if (enviando || !cursoSelecionado) return;
+
+  const dados = validarFormulario();
+  if (!dados) return;
+
+  setEnviando(true, 'Preparando documentos…');
+  const controlador = new AbortController();
+  const tempoLimite = setTimeout(() => controlador.abort(), CONFIG.TEMPO_MAX_ENVIO);
+
+  try {
+    const [doc, docCpf, res, esc2] = await Promise.all([
+      prepararArquivo(dados.docIdentidade),
+      prepararArquivo(dados.docCpf),
+      prepararArquivo(dados.docResidencia),
+      prepararArquivo(dados.docEscolaridade)
+    ]);
+
+    setEnviando(true, 'Enviando documentos… não feche a página.');
+
+    const carga = {
+      idCurso: cursoSelecionado.id,
+      curso: cursoSelecionado.nome,
+      nome: dados.nome,
+      email: dados.email,
+      cpf: dados.cpf,
+      whatsapp: dados.whatsapp,
+      aceite: true,
+      arquivoDoc: doc.dados, tipoDoc: doc.tipo,
+      arquivoCpf: docCpf.dados, tipoCpf: docCpf.tipo,
+      arquivoRes: res.dados, tipoRes: res.tipo,
+      arquivoEsc: esc2.dados, tipoEsc: esc2.tipo
+    };
+
+    const resposta = await fetch(CONFIG.API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(carga),
+      signal: controlador.signal,
+      redirect: 'follow'
+    });
+
+    const bruto = await resposta.text();
+    let resultado;
+    try { resultado = JSON.parse(bruto); }
+    catch { throw new Error('O servidor respondeu em um formato inesperado. Tente novamente.'); }
+
+    if (resultado.status !== 'sucesso') throw new Error(resultado.mensagem || 'Não foi possível concluir a inscrição.');
+    mostrarSucesso(resultado);
+  } catch (erro) {
+    console.error(erro);
+    const aviso = $('form-aviso');
+    aviso.textContent = erro.name === 'AbortError'
+      ? 'O envio demorou demais. Verifique sua conexão e tente novamente — se persistir, reduza o tamanho dos arquivos.'
+      : (erro.message || 'Erro na comunicação. Verifique sua conexão e tente novamente.');
+    aviso.classList.remove('hidden');
+    aviso.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } finally {
+    clearTimeout(tempoLimite);
+    setEnviando(false);
+  }
+});
+
+function mostrarSucesso(resultado) {
+  const primeiroNome = $('nome').value.trim().split(/\s+/)[0];
+  $('sucesso-texto').textContent = primeiroNome + ', sua inscrição no curso "' + cursoSelecionado.nome
+    + '" foi registrada. Acompanhe as mensagens no WhatsApp para confirmar sua matrícula.';
+
+  const link = resultado.linkGrupo || cursoSelecionado.linkGrupo;
+  const botaoGrupo = $('link-grupo');
+  if (link) {
+    botaoGrupo.href = link;
+    botaoGrupo.classList.remove('hidden');
+    botaoGrupo.classList.add('inline-flex');
+  } else {
+    botaoGrupo.classList.add('hidden');
+  }
+
+  $('view-form').classList.add('hidden');
+  $('view-sucesso').classList.remove('hidden');
+  $('enviar').classList.add('hidden');
+  $('cancelar').classList.add('hidden');
+  $('concluir').classList.remove('hidden');
+  $('concluir').focus();
+}
+
+$('idade-minima').textContent = CONFIG.IDADE_MINIMA;
+document.querySelectorAll('.idade-minima-texto').forEach((el) => { el.textContent = CONFIG.IDADE_MINIMA; });
+$('ano').textContent = new Date().getFullYear();
+$('ordenacao').value = ordenacao;
+
+carregarCursos();
+</script>
 </body>
 </html>
