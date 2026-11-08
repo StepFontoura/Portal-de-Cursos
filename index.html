@@ -253,6 +253,7 @@ body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvet
       </div>
       <h3 class="mt-4 text-xl font-extrabold text-slate-900">Inscrição enviada!</h3>
       <p id="sucesso-texto" class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-slate-600"></p>
+      <p id="sucesso-aviso" class="mx-auto mt-4 hidden max-w-md rounded-lg bg-amber-50 px-3 py-2.5 text-sm font-medium text-amber-800 ring-1 ring-amber-200"></p>
       <div class="mx-auto mt-5 max-w-md space-y-2 rounded-xl bg-slate-50 p-4 text-left text-sm text-slate-700 ring-1 ring-slate-200">
         <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Próximos passos</p>
         <p>1. Entre no grupo da turma no WhatsApp para receber os avisos.</p>
@@ -756,9 +757,13 @@ $('ficha').addEventListener('submit', async (evento) => {
   } catch (erro) {
     console.error(erro);
     const aviso = $('form-aviso');
+    const bruto = String((erro && erro.message) || '');
+    const tecnico = /exception|#error|acesso negado|erro interno|unexpected|not found/i.test(bruto);
     aviso.textContent = erro.name === 'AbortError'
       ? 'O envio demorou demais. Verifique sua conexão e tente novamente — se persistir, reduza o tamanho dos arquivos.'
-      : (erro.message || 'Erro na comunicação. Verifique sua conexão e tente novamente.');
+      : (tecnico
+        ? 'Não conseguimos concluir sua inscrição agora. Tente novamente em alguns instantes — se continuar, fale com a secretaria do SENAI pelo WhatsApp.'
+        : (bruto || 'Erro na comunicação. Verifique sua conexão e tente novamente.'));
     aviso.classList.remove('hidden');
     aviso.scrollIntoView({ behavior: 'smooth', block: 'center' });
   } finally {
@@ -771,6 +776,10 @@ function mostrarSucesso(resultado) {
   const primeiroNome = $('nome').value.trim().split(/\s+/)[0];
   $('sucesso-texto').textContent = primeiroNome + ', sua inscrição no curso "' + cursoSelecionado.nome
     + '" foi registrada. Acompanhe as mensagens no WhatsApp para confirmar sua matrícula.';
+
+  const caixaAviso = $('sucesso-aviso');
+  caixaAviso.textContent = resultado.aviso || '';
+  caixaAviso.classList.toggle('hidden', !resultado.aviso);
 
   const link = resultado.linkGrupo || cursoSelecionado.linkGrupo;
   const botaoGrupo = $('link-grupo');
